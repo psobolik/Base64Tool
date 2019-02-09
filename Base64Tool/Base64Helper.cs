@@ -80,12 +80,9 @@ namespace Base64Tool
         // Decode from sourceFile to targetFile. If either are null then use stdin or stdout as appropriate
         public static void Decode(string sourceFile, string targetFile)
         {
-            using (var inStream = OpenInStream(sourceFile))
+            using (Stream inStream = OpenInStream(sourceFile), outStream = OpenOutStream(targetFile))
             {
-                using (var outStream = OpenOutStream(targetFile))
-                {
-                    Decode(inStream, outStream);
-                }
+                Decode(inStream, outStream);
             }
         }
 
