@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -21,13 +22,13 @@ namespace Base64Tool
             }
         }
 
-        private static int Emit(Stream outStream, byte[] bytes, int col, int breakCol)
+        private static int Emit(Stream outStream, IEnumerable<byte> bytes, int col, int breakCol)
         {
+            var newLine = System.Text.Encoding.ASCII.GetBytes(Environment.NewLine);
             foreach (var byt in bytes)
             {
                 if (breakCol != 0 && col++ == breakCol)
                 {
-                    byte[] newLine = System.Text.Encoding.ASCII.GetBytes(Environment.NewLine);
                     outStream.Write(newLine, 0, newLine.Length);
                     col = 1;
                 }
@@ -37,7 +38,6 @@ namespace Base64Tool
         }
 
         // Encode inStream to outStream
-        // ReSharper disable once MemberCanBePrivate.Global
         public static void Encode(Stream inStream, Stream outStream, int breakCol = 0)
         {
             using (var base64Transform = new ToBase64Transform())
@@ -151,7 +151,7 @@ namespace Base64Tool
             }
             else
             {
-                if (!File.Exists(sourceFile)) throw new FileNotFoundException($"Could not open file '{sourceFile}'", sourceFile);
+                if (!File.Exists(sourceFile)) throw new FileNotFoundException(string.Format("Could not open file '{0}'", sourceFile));
                 result = new FileStream(sourceFile, FileMode.Open, FileAccess.Read);
             }
 

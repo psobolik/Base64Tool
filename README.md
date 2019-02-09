@@ -1,0 +1,1 @@
+﻿Command line tool to encode/decode text as Base64.
