@@ -13,12 +13,9 @@ namespace Base64Tool
         // Encode from sourceFile to targetFile. If either are null then use stdin or stdout as appropriate
         public static void Encode(string sourceFile, string targetFile, int breakCol = 0)
         {
-            using (var inStream = OpenInStream(sourceFile))
+            using (Stream inStream = OpenInStream(sourceFile), outStream = OpenOutStream(targetFile))
             {
-                using (var outStream = OpenOutStream(targetFile))
-                {
-                    Encode(inStream, outStream, breakCol);
-                }
+                Encode(inStream, outStream, breakCol);
             }
         }
 
