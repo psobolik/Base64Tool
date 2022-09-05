@@ -8,24 +8,25 @@ namespace Base64Tool
         [STAThread]
         private static void Main(string[] args)
         {
-            var options = new Options();
-            if (!Parser.Default.ParseArgumentsStrict(args, options)) return;
-
-            try
-            {
-                if (options.Decode)
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(options =>
                 {
-                    Base64Helper.Decode(options.Input, options.Output);
-                }
-                else
-                {
-                    Base64Helper.Encode(options.Input, options.Output, options.BreakColumn);
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.Error.WriteLine(ex.Message);
-            }
+                    try
+                    {
+                        if (options.Decode)
+                        {
+                            Base64Helper.Decode(options.Input, options.Output);
+                        }
+                        else
+                        {
+                            Base64Helper.Encode(options.Input, options.Output, options.BreakColumn);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Error.WriteLine(ex.Message);
+                    }
+                });
         }
     }
 }
