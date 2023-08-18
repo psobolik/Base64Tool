@@ -1,8 +1,9 @@
 ﻿using CommandLine;
-using CommandLine.Text;
 
 namespace Base64Tool
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
+    // ReSharper disable UnusedAutoPropertyAccessor.Global
     internal class Options
     {
         [Option('b', "break", HelpText = "Break encoded string at num columns")]
